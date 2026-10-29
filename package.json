@@ -1,0 +1,15 @@
+{
+  "name": "ai-desktop-pet",
+  "version": "1.0.0",
+  "description": "AI-powered animated desktop virtual pet (Electron)",
+  "main": "main.js",
+  "scripts": { "start": "electron .", "dist": "electron-builder" },
+  "devDependencies": { "electron": "^31.0.0", "electron-builder": "^24.13.3" },
+  "build": {
+    "appId": "com.lab.aidesktoppet",
+    "productName": "AI Desktop Pet",
+    "files": ["**/*", "!*.md", "!*.bat", "!*.command"],
+    "win": { "target": "portable" },
+    "mac": { "target": "dmg" }
+  }
+}

@@ -1,0 +1,49 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+<style>
+:root{--spd:1}
+html,body{margin:0;height:100%;background:transparent;overflow:hidden;font:13px/1.35 "Segoe UI",system-ui,sans-serif;user-select:none}
+#stage{display:flex;align-items:flex-end;height:100%;padding-bottom:2px;box-sizing:border-box}
+#stage.left{flex-direction:row-reverse}
+#petbox{flex:none;cursor:pointer}
+#flip{transition:transform .25s;transform-origin:50% 100%}
+#body{transform-origin:50% 100%;animation:bob calc(3s / var(--spd)) ease-in-out infinite}
+#img{display:block;width:100%;height:auto;pointer-events:none;-webkit-user-drag:none}
+#body.walk{animation:walk calc(.5s / var(--spd)) linear infinite}
+#body.blink{animation:blink .16s}
+#body.happy{animation:hop .45s}
+@keyframes bob{0%,100%{transform:translateY(0) scale(1,1)}50%{transform:translateY(-3px) scale(1.02,.98)}}
+@keyframes walk{0%,100%{transform:translateY(0) rotate(-4deg) scale(1.05,.93)}25%,75%{transform:translateY(-12px) rotate(0) scale(.96,1.07)}50%{transform:translateY(0) rotate(4deg) scale(1.05,.93)}}
+@keyframes blink{50%{transform:scale(1.02,.9)}}
+@keyframes hop{30%{transform:translateY(-16px) scale(.95,1.08)}60%{transform:translateY(0) scale(1.08,.9)}}
+#panel{flex:none;width:262px;margin:0 10px;display:none;position:relative}
+#bubble,#chat{background:#fffdf7;border:2px solid #5a4636;border-radius:14px;box-shadow:0 3px 8px rgba(0,0,0,.25);color:#3b2d22}
+#bubble{padding:9px 13px;position:relative}
+#bubble::before{content:"";position:absolute;bottom:16px;border:8px solid transparent}
+#stage:not(.left) #bubble::before{left:-17px;border-right-color:#5a4636}
+#stage.left #bubble::before{right:-17px;border-left-color:#5a4636}
+#chat{display:none;flex-direction:column;height:270px;overflow:hidden}
+#chat header{display:flex;justify-content:space-between;align-items:center;padding:5px 10px;background:#ffe3c4;font-weight:600}
+#close{border:0;background:none;cursor:pointer;font-size:15px}
+#msgs{flex:1;overflow-y:auto;padding:8px;display:flex;flex-direction:column;gap:5px;user-select:text}
+.m{max-width:85%;padding:5px 9px;border-radius:12px}
+.m.pet{background:#ffe9d2;align-self:flex-start}.m.me{background:#d8ecff;align-self:flex-end}
+#form{display:flex;gap:5px;padding:6px;border-top:1px solid #eadccc}
+#inp{flex:1;min-width:0;border:1px solid #cdb9a4;border-radius:10px;padding:5px 8px;font:inherit}
+#send{border:0;border-radius:10px;background:#ff9f55;color:#fff;padding:0 12px;cursor:pointer}
+</style></head>
+<body>
+<div id="stage">
+  <div id="petbox"><div id="flip"><div id="body"><img id="img" src="assets/pet.png" alt="pet"></div></div></div>
+  <div id="panel">
+    <div id="bubble"></div>
+    <div id="chat">
+      <header><span>Pip</span><button id="close" title="Close">✕</button></header>
+      <div id="msgs"></div>
+      <div id="form"><input id="inp" placeholder="Say something..." autocomplete="off"><button id="send">Send</button></div>
+    </div>
+  </div>
+</div>
+<script src="pet.js"></script>
+</body></html>
